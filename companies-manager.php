@@ -30,7 +30,7 @@ if ($argc > 1){
                 can_not_save_data_file_error();
             }
             else{
-                echo 'New company was added!';
+                echo "New company was added!\n";
             }
         }
         else require_more_arguments_error();
@@ -73,7 +73,7 @@ if ($argc > 1){
                     can_not_save_data_file_error();
                 }
                 else{
-                    echo 'Company data was updated!';
+                    echo "Company data was updated!\n";
                 }
             }
             else no_company_exist_error();
@@ -95,7 +95,7 @@ if ($argc > 1){
                     can_not_save_data_file_error();
                 }
                 else{
-                    echo 'Company was removed from list!';
+                    echo "Company was removed from list!\n";
                 }
             }
             else no_company_exist_error();
