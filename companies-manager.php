@@ -24,22 +24,23 @@ else{
     echo "Companies list is empty.";
 }
 if ($argc > 1){
+    var_dump($argv);
     $command = $argv[1];
     switch($command){
         case 'add': // add new company command
-        if ($argc == 6){
-            $company_name = $argv[1];
-            $company_registration_code = $argv[2];
-            $company_email = $argv[3];
-            $company_phone = $argv[4];
-            $comment = $argv[5];
+        if ($argc == 7){
+            $company_name = $argv[2];
+            $company_registration_code = $argv[3];
+            $company_email = $argv[4];
+            $company_phone = $argv[5];
+            $comment = $argv[6];
             if (!isNumber($company_registration_code)){
                 require_field_number_die('company_registration_code');
             }
             if (!filter_var($company_email, FILTER_VALIDATE_EMAIL)){ // email validation
                 require_field_email_die('company_email');
             }
-            if (!isPhoneNumber($str)){
+            if (!isPhoneNumber($company_phone)){
                 require_field_phone_number_die('company_phone');
             }
             // company data validation completed
@@ -54,6 +55,9 @@ if ($argc > 1){
             ));
             if (file_put_contents('data.json', json_encode($data)) === false){
                 can_not_save_data_file_error();
+            }
+            else{
+                echo 'New company was added!';
             }
         }
         else require_more_arguments_error();
