@@ -146,9 +146,10 @@ else{
     else{
         echo "Companies list is empty.";
     }
-    echo "\nAVAILABLE COMMANDS\n";
+    echo "\n\nAVAILABLE COMMANDS\n\n";
     echo "add [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
-    echo "edit [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
-    echo "remove [company_id]\n";
+    echo "edit [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want edit already exist company\n";
+    echo "remove [company_id]\n\tUse this command if you want delete company\n";
+    echo "\n";
 }
 ?>
