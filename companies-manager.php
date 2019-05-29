@@ -2,8 +2,8 @@
 $data_json = file_get_contents('data.json'); // get data file
 if (!empty($data_json)){
     $data = json_decode($data_json, true); // convert json string to PHP data array
-    echo "----COMPANIES LIST----";
-    echo "id|name|registration_code|email|phone|comment";
+    echo "----COMPANIES LIST----\n";
+    echo "id|name|registration_code|email|phone|comment\n";
     function printOneColumn($str){ // print one column
         echo $str."|";
     }
