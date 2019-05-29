@@ -52,15 +52,19 @@ if ($argc > 1){
                 $comment = $argv[7];
                 if (!isNumber($company_registration_code)){
                     require_field_number_die('company_registration_code');
+                    exit();
                 }
                 if (!filter_var($company_email, FILTER_VALIDATE_EMAIL)){ // email validation
                     require_field_email_die('company_email');
+                    exit();
                 }
                 if (is_email_exist($company_email, $data) !== false){
                     email_already_exist_error();
+                    exit();
                 }
                 if (!isPhoneNumber($company_phone)){
                     require_field_phone_number_die('company_phone');
+                    exit();
                 }
                 // company data validation completed
                 $data[$index]['name'] = $company_name;
@@ -86,6 +90,7 @@ if ($argc > 1){
             $company_id = $argv[2];
             if (!isNumber($company_id)){
                 require_field_number_die('company_id');
+                exit();
             }
             $company_id = intval($company_id); // conver to int
             $index = is_company_exist($company_id, $data);
@@ -114,19 +119,25 @@ if ($argc > 1){
             $file_name = $argv[2];
             $handle = fopen($file_name, "r");
             if ($handle) {
-                $i = 1;
+                $i = 0;
                 while (($line = fgets($handle)) !== false) {
-                    echo "Importing column $i ...\n";
-                    $columns = explode(',', $line);
-                    if (count($columns) == 6){ // company data has 6 fields
-                        add_new_company(array(
-                            'id'=>$columns[0],
-                            'name'=>$columns[1],
-                            'registration_code'=>$columns[2],
-                            'email'=>$columns[3],
-                            'phone'=>$columns[4],
-                            'comment'=>$columns[5]
-                        ));
+                    $line = str_replace("\r\n","",$line);
+                    if ($i > 0){
+                        echo "Importing row $i ...\n";
+                        $columns = explode(',', $line);
+                        if (count($columns) == 6){ // company data has 6 fields
+                            add_new_company(array(
+                                'id'=>$columns[0],
+                                'name'=>$columns[1],
+                                'registration_code'=>$columns[2],
+                                'email'=>$columns[3],
+                                'phone'=>$columns[4],
+                                'comment'=>$columns[5]
+                            ));
+                        }
+                        else{
+                            echo "Row $i is not valid\n";
+                        }
                     }
                     $i++;
                 }
@@ -153,9 +164,9 @@ if ($argc > 1){
 else{
     if (!empty($data)){
         echo "----COMPANIES LIST----\n";
-        echo "id|name|registration_code|email|phone|comment|\n";
+        echo "id | \tname | \tregistration_code | \temail | \tphone | \tcomment | \t\n";
         function printOneColumn($str){ // print one column
-            echo $str."|";
+            echo $str." | \t";
         }
         foreach ($data as $company){ // print each company data
             printOneColumn($company['id']);
