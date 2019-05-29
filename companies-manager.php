@@ -90,7 +90,13 @@ if ($argc > 1){
             $company_id = intval($company_id); // conver to int
             $index = is_company_exist($company_id, $data);
             if ($index !== false){ // check if company exist
-                array_slice($data, $index, 1);
+                if (count($data) > 1){ // array has more than one element
+                    unset($data[$index]);
+                    $data = array_values($data);
+                }
+                else{
+                    $data = array(); // empty array
+                }
                 if (file_put_contents('data.json', json_encode($data)) === false){
                     can_not_save_data_file_error();
                 }
@@ -103,7 +109,27 @@ if ($argc > 1){
         else require_more_arguments_error();
         break;
 
-        default: break;
+        case '-import': // remove company command
+        if ($argc == 3){
+            $file_name = $argv[2];
+            $handle = fopen($file_name, "r");
+            if ($handle) {
+                while (($line = fgets($handle)) !== false) {
+                    $columns = explode(',', $line);
+
+                }
+                fclose($handle);
+            } 
+            else{
+                die("Can not open import file. Please check file name and try again.\n");
+            } 
+        }
+        else require_more_arguments_error();
+        break;
+
+        default: 
+        echo "Command '$command' does not exist!\n";
+        break;
     }
 }
 else{
