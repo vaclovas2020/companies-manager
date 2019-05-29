@@ -32,7 +32,7 @@ if ($argc > 1){
             $company_registration_code = $argv[2];
             $company_email = $argv[3];
             $company_phone = $argv[4];
-            $company_comment = $argv[5];
+            $comment = $argv[5];
             if (!isNumber($company_registration_code)){
                 require_field_number_die('company_registration_code');
             }
@@ -41,6 +41,19 @@ if ($argc > 1){
             }
             if (!isPhoneNumber($str)){
                 require_field_phone_number_die('company_phone');
+            }
+            // company data validation completed
+            $id_auto_increment_value++; // increment company id value
+            array_push($data['data'], array(
+                'id'=>$id_auto_increment_value,
+                'name'=>$company_name,
+                'registration_code'=>$company_registration_code,
+                'email'=>$company_email,
+                'phone'=>$company_phone,
+                'comment'=>$comment
+            ));
+            if (file_put_contents('data.json', json_encode($data)) === false){
+                can_not_save_data_file_error();
             }
         }
         else require_more_arguments_error();
@@ -51,5 +64,7 @@ if ($argc > 1){
 }
 else{
     // print help manual text (in the future I will write that)
+    echo "\nAVAILABLE COMMANDS\n";
+    echo "add [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
 }
 ?>
