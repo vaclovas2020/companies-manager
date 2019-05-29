@@ -10,7 +10,7 @@ $data = json_decode($data_json, true); // convert json string to PHP data array
 if ($argc > 1){
     $command = $argv[1];
     switch($command){
-        case 'add': // add new company command
+        case '-add': // add new company command
         if ($argc == 8){
             $company_id = $argv[2];
             $company_name = $argv[3];
@@ -36,7 +36,7 @@ if ($argc > 1){
         else require_more_arguments_error();
         break;
 
-        case 'edit': // edit company command
+        case '-edit': // edit company command
         if ($argc == 8){
             $company_id = $argv[2];
             if (!isNumber($company_id)){
@@ -81,7 +81,7 @@ if ($argc > 1){
         else require_more_arguments_error();
         break;
 
-        case 'remove': // remove company command
+        case '-remove': // remove company command
         if ($argc == 3){
             $company_id = $argv[2];
             if (!isNumber($company_id)){
@@ -127,9 +127,9 @@ else{
         echo "Companies list is empty.";
     }
     echo "\n\nAVAILABLE COMMANDS\n\n";
-    echo "add [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
-    echo "edit [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want edit already exist company\n";
-    echo "remove [company_id]\n\tUse this command if you want delete company\n";
+    echo "-add [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
+    echo "-edit [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want edit already exist company\n";
+    echo "-remove [company_id]\n\tUse this command if you want delete company\n";
     echo "\n";
 }
 ?>
