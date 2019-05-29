@@ -32,8 +32,14 @@ if ($argc > 1){
             $company_email = $argv[3];
             $company_phone = $argv[4];
             $company_comment = $argv[5];
-            if (isNumber($company_registration_code)){
-                
+            if (!isNumber($company_registration_code)){
+                require_field_number_die('company_registration_code');
+            }
+            if (!filter_var($company_email, FILTER_VALIDATE_EMAIL)){ // email validation
+                require_field_email_die('company_email');
+            }
+            if (!isPhoneNumber($str)){
+                require_field_phone_number_die('company_phone');
             }
         }
         else require_more_arguments_error();
