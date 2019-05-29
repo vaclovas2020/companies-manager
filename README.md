@@ -1,6 +1,8 @@
 # Companies Manager
 
-PHP project for Visma Lietuva
+PHP CLI application for companies register.
+
+Copyright (c) Vaclovas Lapinskis 2019
 
 ## AVAILABLE COMMANDS
 
