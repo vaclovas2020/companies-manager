@@ -4,27 +4,7 @@ require_once('function.validation.php'); // validation module
 $data_json = file_get_contents('data.json'); // get data file
 $data = json_decode($data_json, true); // convert json string to PHP data array
 $id_auto_increment_value = $data['id_auto_increment_value'];
-if (!empty($data)){
-    echo "----COMPANIES LIST----\n";
-    echo "id|name|registration_code|email|phone|comment|\n";
-    function printOneColumn($str){ // print one column
-        echo $str."|";
-    }
-    foreach ($data['data'] as $company){ // print each company data
-        printOneColumn($company['id']);
-        printOneColumn($company['name']);
-        printOneColumn($company['registration_code']);
-        printOneColumn($company['email']);
-        printOneColumn($company['phone']);
-        printOneColumn($company['comment']);
-        echo "\n"; // add new line
-    }
-}
-else{
-    echo "Companies list is empty.";
-}
 if ($argc > 1){
-    var_dump($argv);
     $command = $argv[1];
     switch($command){
         case 'add': // add new company command
@@ -67,7 +47,25 @@ if ($argc > 1){
     }
 }
 else{
-    // print help manual text (in the future I will write that)
+    if (!empty($data['data'])){
+        echo "----COMPANIES LIST----\n";
+        echo "id|name|registration_code|email|phone|comment|\n";
+        function printOneColumn($str){ // print one column
+            echo $str."|";
+        }
+        foreach ($data['data'] as $company){ // print each company data
+            printOneColumn($company['id']);
+            printOneColumn($company['name']);
+            printOneColumn($company['registration_code']);
+            printOneColumn($company['email']);
+            printOneColumn($company['phone']);
+            printOneColumn($company['comment']);
+            echo "\n"; // add new line
+        }
+    }
+    else{
+        echo "Companies list is empty.";
+    }
     echo "\nAVAILABLE COMMANDS\n";
     echo "add [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
 }
