@@ -114,11 +114,29 @@ if ($argc > 1){
             $file_name = $argv[2];
             $handle = fopen($file_name, "r");
             if ($handle) {
+                $i = 1;
                 while (($line = fgets($handle)) !== false) {
+                    echo "Importing column $i ...\n";
                     $columns = explode(',', $line);
-
+                    if (count($columns) == 6){ // company data has 6 fields
+                        add_new_company(array(
+                            'id'=>$columns[0],
+                            'name'=>$columns[1],
+                            'registration_code'=>$columns[2],
+                            'email'=>$columns[3],
+                            'phone'=>$columns[4],
+                            'comment'=>$columns[5]
+                        ));
+                    }
+                    $i++;
                 }
                 fclose($handle);
+                if (file_put_contents('data.json', json_encode($data)) === false){
+                    can_not_save_data_file_error();
+                }
+                else{
+                    echo "Data import finished!\n";
+                }
             } 
             else{
                 die("Can not open import file. Please check file name and try again.\n");
@@ -156,6 +174,7 @@ else{
     echo "-add [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
     echo "-edit [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want edit already exist company\n";
     echo "-remove [company_id]\n\tUse this command if you want delete company\n";
+    echo "-import [csv_file_name]\n\tImport companies data from .csv file\n";
     echo "\n";
 }
 ?>

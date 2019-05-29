@@ -13,4 +13,6 @@ PHP project for Visma Lietuva
         #Use this command if you want edit already exist company
     sudo php "companies-manager.php" -remove [company_id]
         #Use this command if you want delete company
+    sudo php "companies-manager.php" -import [csv_file_name]
+        #Import companies data from .csv file
 ```
