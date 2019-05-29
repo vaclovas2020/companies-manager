@@ -1,2 +1,3 @@
-#Companies Manager
-PHP project for Visma Lietuva 
+# Companies Manager
+
+PHP project for Visma Lietuva
