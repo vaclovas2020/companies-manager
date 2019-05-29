@@ -17,4 +17,7 @@ function can_not_save_data_file_error(){
 function no_company_exist_error(){
     die("Company with this company_id does not exit. Please check company_id\n");
 }
+function email_already_exist_error(){
+    die("Email address already exist in list. Please use unique email address.\n");
+}
 ?>
