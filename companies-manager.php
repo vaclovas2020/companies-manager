@@ -56,7 +56,7 @@ if ($argc > 1){
                 if (!filter_var($company_email, FILTER_VALIDATE_EMAIL)){ // email validation
                     require_field_email_die('company_email');
                 }
-                if (is_email_exist($email, $data) !== false){
+                if (is_email_exist($company_email, $data) !== false){
                     email_already_exist_error();
                 }
                 if (!isPhoneNumber($company_phone)){
