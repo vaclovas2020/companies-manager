@@ -18,7 +18,7 @@ if ($argc > 1){
             $company_id = intval($company_id); // conver to int
             $index = is_company_exist($company_id, $data);
             if ($index !== false){ // check if company exist
-                die('Company with this company_id already exist. Try to edit with edit command.');
+                company_exist_error();
             }
             $company_name = $argv[3];
             $company_registration_code = $argv[4];
@@ -55,6 +55,7 @@ if ($argc > 1){
         }
         else require_more_arguments_error();
         break;
+
         case 'edit': // edit company command
         if ($argc == 8){
             $company_id = $argv[2];
@@ -100,6 +101,28 @@ if ($argc > 1){
         else require_more_arguments_error();
         break;
 
+        case 'remove': // remove company command
+        if ($argc == 3){
+            $company_id = $argv[2];
+            if (!isNumber($company_id)){
+                require_field_number_die('company_id');
+            }
+            $company_id = intval($company_id); // conver to int
+            $index = is_company_exist($company_id, $data);
+            if ($index !== false){ // check if company exist
+                array_slice($data, $index, 1);
+                if (file_put_contents('data.json', json_encode($data)) === false){
+                    can_not_save_data_file_error();
+                }
+                else{
+                    echo 'Company was removed from list!';
+                }
+            }
+            else no_company_exist_error();
+        }
+        else require_more_arguments_error();
+        break;
+
         default: break;
     }
 }
@@ -126,5 +149,6 @@ else{
     echo "\nAVAILABLE COMMANDS\n";
     echo "add [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
     echo "edit [company_id] [company_name] [company_registration_code] [company_email] [company_phone] [comment]\n\tUse this command if you want add new company\n";
+    echo "remove [company_id]\n";
 }
 ?>
