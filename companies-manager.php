@@ -3,6 +3,7 @@ require_once('function.error_messages.php'); // error mesages print module
 require_once('function.validation.php'); // validation module
 require_once('function.is_company_exist.php'); // check if company exist in data array and return index
 require_once('function.is_email_exist.php'); // check if email exist in data array and return index
+require_once('function.add_new_company.php');
 
 $data_json = file_get_contents('data.json'); // get data file
 $data = json_decode($data_json, true); // convert json string to PHP data array
@@ -12,33 +13,12 @@ if ($argc > 1){
         case 'add': // add new company command
         if ($argc == 8){
             $company_id = $argv[2];
-            if (!isNumber($company_id)){
-                require_field_number_die('company_id');
-            }
-            $company_id = intval($company_id); // conver to int
-            $index = is_company_exist($company_id, $data);
-            if ($index !== false){ // check if company exist
-                company_exist_error();
-            }
             $company_name = $argv[3];
             $company_registration_code = $argv[4];
             $company_email = $argv[5];
             $company_phone = $argv[6];
             $comment = $argv[7];
-            if (!isNumber($company_registration_code)){
-                require_field_number_die('company_registration_code');
-            }
-            if (!filter_var($company_email, FILTER_VALIDATE_EMAIL)){ // email validation
-                require_field_email_die('company_email');
-            }
-            if (is_email_exist($email, $data) !== false){
-                email_already_exist_error();
-            }
-            if (!isPhoneNumber($company_phone)){
-                require_field_phone_number_die('company_phone');
-            }
-            // company data validation completed
-            array_push($data, array(
+            add_new_company(array(
                 'id'=>$company_id,
                 'name'=>$company_name,
                 'registration_code'=>$company_registration_code,
